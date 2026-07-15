@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // app_kv holds every piece of shared app data (users, transactions,
+    // config, etc.) as one document per key. Open read/write so the app
+    // works with no login system of its own (DiamondPlay does its own
+    // phone+OTP auth inside the app, not via Firebase Auth).
+    match /app_kv/{key} {
+      allow read, write: if true;
+    }
+  }
+}
