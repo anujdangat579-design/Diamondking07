@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ⚠️ IMPORTANT — read the README "Security" section before deploying.
+    // This app has no Firebase Authentication, so these rules CANNOT tell a
+    // real player apart from an attacker calling the Firestore API directly.
+    // Read/write is left open here because the app currently depends on
+    // that (every device writes its own data straight to app_kv). This is
+    // NOT secure against a determined attacker — see README for the real
+    // fix (Firebase App Check now, Firebase Auth + Cloud Functions later).
+    match /app_kv/{key} {
+      allow read, write: if true;
+    }
+  }
+}
+
+
